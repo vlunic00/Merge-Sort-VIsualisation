@@ -1,10 +1,10 @@
 
 
-function Bar(){
+function Bar({ value }){
     return(
         <>
         {console.log("done")}
-        <div className="w-[10%] h-[20%] bg-slate-600" />
+        <div className="w-[5%] bg-slate-600" style={{ height: `${value * 10}%` }} />
         </>
     )
 }

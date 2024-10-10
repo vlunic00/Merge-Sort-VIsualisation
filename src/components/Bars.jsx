@@ -8,9 +8,9 @@ function Bars({ arrayToSort }){
 
     return(
         <>
-        <div className="flex flex-wrap h-[100vh] w-[100%] gap-[1%] justify-center content-center">
-            {workingArray.map((el) => (
-                <Bar key={el} />
+        <div className="flex flex-wrap h-[20%] w-[100%] gap-[1%] justify-center items-end">
+            {workingArray.map((el, index) => (
+                <Bar key={index} value={el} />
             ))}
         </div>
         </>
