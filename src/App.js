@@ -1,10 +1,15 @@
 import { useState } from "react";
-import Bars from "./components/Bars";
+import Bar from "./components/Bar";
 
 
 function App() {
 
   const [unsortedArray, setUnsortedArray] = useState([1, 4, 2, 9, 5])
+  const [activeIndexes, setActiveIndexes] = useState([])
+  
+  const originalArray = [1, 4, 2, 9, 5];
+  const [sortStatus, setStortStatus] = useState(false);
+
 
   function merge(arr, left, mid, right) {
     const n1 = mid - left + 1;
@@ -50,20 +55,27 @@ function mergeSort(arr, left, right) {
         return;
 
     const mid = Math.floor(left + (right - left) / 2);
-    mergeSort(arr, left, mid);
-    mergeSort(arr, mid + 1, right);
-    merge(arr, left, mid, right);
+    for (let i = 0; i < mid; i++){
+        setActiveIndexes(activeIndexes => [...activeIndexes, i])
+    }
+    //mergeSort(arr, left, mid);
+    //mergeSort(arr, mid + 1, right);
+    //merge(arr, left, mid, right);
 }
-
-
-//SORT WORKS BUT THE PAGE DOESN'T RENDER IT. NEED TO INITIATE RERENDER OF PAGE SO THAT THE SORTED ARRAY IS DISPLAYED
 
 
   return (
     <>
     <div className="flex flex-wrap justify-center content-center w-[100%] h-[100vh] px-[5%]">
-      <Bars arrayToSort = {unsortedArray}/>
-      <button className="mt-[10px] p-[10px] bg-lime-700 rounded-md text-white" onClick={() => {mergeSort(unsortedArray, 0, unsortedArray.length - 1)}}>Sort</button>
+    <div className="flex flex-wrap h-[40%] w-[100%] gap-[1%] justify-center items-end">
+            {unsortedArray.map((el, index) => (
+                <Bar key={index} value={el} activeList={activeIndexes} />
+            ))}
+        </div>
+    <div className="flex justify-center gap-10">
+        <button className="mt-[10px] p-[10px] bg-lime-700 rounded-md text-white" onClick={() => {mergeSort(unsortedArray, 0, unsortedArray.length - 1); setStortStatus(true)}}>Sort</button>
+        {sortStatus && <button className="mt-[10px] p-[10px] bg-lime-700 rounded-md text-white" onClick={() => {setUnsortedArray(originalArray); setStortStatus(false)}}>Unsort</button>}
+    </div>
     </div>
     </>
   );
